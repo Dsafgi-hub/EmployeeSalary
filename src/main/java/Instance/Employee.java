@@ -1,3 +1,5 @@
+package Instance;
+
 import java.math.BigDecimal;
 
 public class Employee {

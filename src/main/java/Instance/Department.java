@@ -1,10 +1,13 @@
+package Instance;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Department {
     private String name;
-    private ArrayList<Employee> employees;
+    private List<Employee> employees;
 
     public Department(String name) {
         this.name = name;
@@ -15,7 +18,7 @@ public class Department {
         this.name = name;
     }
 
-    public ArrayList<Employee> getEmployees() {
+    public List<Employee> getEmployees() {
         return employees;
     }
 
@@ -31,7 +34,7 @@ public class Department {
 
     }
 
-    private BigDecimal getTotalSalary() {
+    public BigDecimal getTotalSalary() {
         BigDecimal totalSalary = new BigDecimal(0).setScale(2, RoundingMode.HALF_UP);
         for(Employee employee: employees){
             totalSalary = totalSalary.add(employee.getSalary());
