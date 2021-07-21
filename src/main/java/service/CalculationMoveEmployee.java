@@ -1,36 +1,15 @@
-package Service;
+package service;
 
-import Instance.Company;
-import Instance.Department;
-import Instance.Employee;
-import java.io.IOException;
+import instance.Department;
+import instance.Employee;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-public class Service {
-
-    public static void main(String[] args) {
-        Company company = new Company();
-        Path inputFilePath = Path.of(args[0]),
-             outputFilePath = Path.of(args[1]);
-        Map<String, Department>  companyMap = IOFileService.uploadEmployeeFromFile(inputFilePath, company);
-        outputCompanyMap(companyMap);
-        StringBuilder result = getPossibleSolutions(companyMap);
-        IOFileService.writeResultToFile(result, outputFilePath);
-        System.out.println(result);
-
-    }
-
-    public static void outputCompanyMap(Map<String, Department> companyMap) {
-        System.out.printf("%-15s  %-15s %n", "Department", "Average salary");
-        for(Department department: companyMap.values()) {
-            System.out.printf("%-15s %-15s %n", department.getName(), department.getAverageSalary());
-        }
-    }
-
+public class CalculationMoveEmployee {
     static StringBuilder getPossibleSolutions(Map<String, Department> companyMap) {
         StringBuilder result = new StringBuilder();
         ArrayList<Department> departments = new ArrayList<>(companyMap.values());
@@ -55,7 +34,7 @@ public class Service {
         for (Employee employee : departmentFrom.getEmployees()) {
             if ((departmentTo.getAverageSalary().compareTo(employee.getSalary()) < 0)
                     && (departmentFrom.getAverageSalary().compareTo(employee.getSalary()) > 0)) {
-               move.append(addMove(departmentFrom, departmentTo, employee));
+                move.append(addMove(departmentFrom, departmentTo, employee));
             }
         }
         return move;
@@ -81,6 +60,4 @@ public class Service {
         totalSalary = sign ? totalSalary.add(employee.getSalary()) : totalSalary.subtract(employee.getSalary());
         return totalSalary.divide(new BigDecimal(department.getEmployees().size() + (sign ? 1 : -1)),2, RoundingMode.HALF_UP);
     }
-
-
 }

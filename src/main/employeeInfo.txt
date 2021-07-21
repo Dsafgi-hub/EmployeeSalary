@@ -1,5 +1,6 @@
 John Smith;IT department;15000
 Avram Lincoln;Management;45000.32
+Donald Trump;Management;154550.62
 Teo Russell;HR;13000.86
 Ken Kennedy;HR;14000
 Son U Min;HR;27000

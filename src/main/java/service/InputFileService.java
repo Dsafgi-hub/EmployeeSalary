@@ -1,8 +1,8 @@
-package Service;
+package service;
 
-import Instance.Company;
-import Instance.Department;
-import Instance.Employee;
+import instance.Company;
+import instance.Department;
+import instance.Employee;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 
-public class IOFileService {
+public class InputFileService {
 
     public static Map<String, Department> uploadEmployeeFromFile(Path inputFilePath, Company company) {
         Map<String, Department> companyMap = company.getCompanyMap();
@@ -44,8 +44,8 @@ public class IOFileService {
                 throw new InputDataException( commonPart + " Не должно содержаться пустых полей");
             }
 
-            String name = fields[0],
-                    department = fields[1],
+            String name = fields[0].trim(),
+                    department = fields[1].trim(),
                     antiPattern = ".*[!@#$%^&*()?/|\";:{}'~<>,.+=_\\[\\]]+.*";
             if (!name.matches("\\D+")
                 || name.matches(antiPattern)
@@ -54,7 +54,7 @@ public class IOFileService {
                 throw new InputDataException(commonPart + " В полях ФИО и отдел должны содержаться только буквы и тире");
             }
 
-            String salary = fields[2];
+            String salary = fields[2].trim();
             if (!salary.matches("\\d+[.,]?\\d{0,2}")) {
                 throw new InputDataException(commonPart + " Зарплата должна быть положительным числом с точностью до сотых");
             }
@@ -63,15 +63,6 @@ public class IOFileService {
             System.out.println(e.getMessage());
         }
         return flag;
-    }
-
-    static void writeResultToFile(StringBuilder result, Path filename)  {
-        try (BufferedWriter writer = Files.newBufferedWriter(filename)) {
-            writer.write(String.valueOf(result));
-            writer.flush();
-        } catch (IOException e) {
-            System.out.println("Внимание! Проверьте путь к файлу: файл для записи результата не найден");
-        }
     }
 }
 
