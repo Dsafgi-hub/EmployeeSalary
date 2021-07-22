@@ -15,10 +15,8 @@ public class Service {
             Map<String, Department> companyMap = InputFileService.uploadEmployeeFromFile(inputFilePath, company);
             if (companyMap.size() != 0) {
                 OutputResultService.outputCompanyMap(companyMap);
-                StringBuilder result = CalculationMoveEmployee.getPossibleSolutions(companyMap);
-                System.out.println(result);
-                OutputFileService.writeResultToFile(result, outputFilePath);
-                System.out.println(result);
+                OutputFileService.reloadFile(outputFilePath);
+               Combinations.getAllPossibleSolutions(companyMap, outputFilePath);
             }
         } catch (ArrayIndexOutOfBoundsException e){
             System.out.println("Внимание! Укажите путь к обоим файлам во входных аргументах(args[0] и args[1])");

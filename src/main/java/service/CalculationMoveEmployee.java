@@ -6,7 +6,6 @@ import instance.Employee;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class CalculationMoveEmployee {
@@ -15,14 +14,8 @@ public class CalculationMoveEmployee {
         ArrayList<Department> departments = new ArrayList<>(companyMap.values());
         for (int i = 0; i < departments.size(); i++) {
             for (int j = i + 1; j < departments.size(); j++) {
-                Department departmentFrom, departmentTo;
-                if (departments.get(i).getAverageSalary().compareTo(departments.get(j).getAverageSalary()) > 0) {
-                    departmentFrom = departments.get(i);
-                    departmentTo = departments.get(j);
-                } else {
-                    departmentFrom = departments.get(j);
-                    departmentTo = departments.get(i);
-                }
+                Department departmentFrom = Combinations.getRankDepartment(departments, i, j).get(0),
+                        departmentTo = Combinations.getRankDepartment(departments, i, j).get(1);
                 result.append(checkPossibleMove(departmentFrom, departmentTo));
             }
         }
@@ -34,25 +27,10 @@ public class CalculationMoveEmployee {
         for (Employee employee : departmentFrom.getEmployees()) {
             if ((departmentTo.getAverageSalary().compareTo(employee.getSalary()) < 0)
                     && (departmentFrom.getAverageSalary().compareTo(employee.getSalary()) > 0)) {
-                move.append(addMove(departmentFrom, departmentTo, employee));
+                move.append(OutputResultService.addMove(departmentFrom, departmentTo, employee));
             }
         }
         return move;
-    }
-
-    public static StringBuilder addMove(Department departmentFrom, Department departmentTo, Employee employee) {
-        StringBuilder move = new StringBuilder();
-        return move.append("Сотрудник ")
-                .append(employee.getName())
-                .append(" из отдела ")
-                .append(departmentFrom.getName())
-                .append(" может быть переведен в отдел ")
-                .append(departmentTo.getName())
-                .append(". Средняя зарплата в первом станет - ")
-                .append(countNewDepartmentSalary(departmentFrom, employee, false))
-                .append(", во втором - ")
-                .append(countNewDepartmentSalary(departmentTo, employee, true))
-                .append(".\n");
     }
 
     public static BigDecimal countNewDepartmentSalary(Department department, Employee employee, boolean sign) {
