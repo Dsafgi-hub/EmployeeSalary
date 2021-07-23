@@ -7,6 +7,7 @@ import instance.TransferGroup;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +20,8 @@ public class Combinations {
                 Department departmentFrom = getRankDepartment(departments, i, j).get(0),
                         departmentTo = getRankDepartment(departments, i, j).get(1);
                 for (int k = 1; k < departmentFrom.getEmployees().size(); k++) {
-                    ArrayList<Employee> result = fillArrayListEmpty(k);
+                    ArrayList<Employee> result = new ArrayList<>(
+                            Collections.nCopies(k, new Employee("", new BigDecimal(0))));
                     getAllPossibleCombinations(departmentFrom.getEmployees(), k, 0,
                             new TransferGroup(result, departmentFrom, departmentTo), outputFilePath);
                 }
@@ -40,14 +42,6 @@ public class Combinations {
         departmentArrayList.add(0, departmentFrom);
         departmentArrayList.add(1, departmentTo);
         return departmentArrayList;
-    }
-
-    static ArrayList<Employee> fillArrayListEmpty(int count) {
-        ArrayList<Employee> arrayList = new ArrayList<>(count);
-        for (int i = 0; i < count; i++) {
-            arrayList.add(new Employee("", new BigDecimal(0)));
-        }
-        return arrayList;
     }
 
     static void getAllPossibleCombinations(List<Employee> transferList, int length, int startPosition,

@@ -8,3 +8,4 @@ Barbara Streisand;Management;28000.99
 Bill Gates;IT department;19000
 Maria Kari;IT department;14000
 Jessica Bellingham;IT department;45800
+Bred Pitt;SEO;1000
