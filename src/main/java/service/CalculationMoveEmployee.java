@@ -12,11 +12,14 @@ public class CalculationMoveEmployee {
     static StringBuilder getPossibleSolutions(Map<String, Department> companyMap) {
         StringBuilder result = new StringBuilder();
         ArrayList<Department> departments = new ArrayList<>(companyMap.values());
+        Combinations.departmentSortDesc(departments);
         for (int i = 0; i < departments.size(); i++) {
             for (int j = i + 1; j < departments.size(); j++) {
-                Department departmentFrom = Combinations.getRankDepartment(departments, i, j).get(0),
-                        departmentTo = Combinations.getRankDepartment(departments, i, j).get(1);
-                result.append(checkPossibleMove(departmentFrom, departmentTo));
+                Department departmentFrom = departments.get(i),
+                        departmentTo = departments.get(j);
+                if (departmentFrom.getAverageSalary().compareTo(departmentTo.getAverageSalary()) != 0) {
+                    result.append(checkPossibleMove(departmentFrom, departmentTo));
+                }
             }
         }
         return result;

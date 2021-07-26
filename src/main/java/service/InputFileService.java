@@ -1,6 +1,5 @@
 package service;
 
-import instance.Company;
 import instance.Department;
 import instance.Employee;
 
@@ -8,12 +7,13 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 
 public class InputFileService {
 
-    public static Map<String, Department> uploadEmployeeFromFile(Path inputFilePath, Company company) {
-        Map<String, Department> companyMap = company.getCompanyMap();
+    public static Map<String, Department> uploadEmployeeFromFile(Path inputFilePath) {
+        Map<String, Department> companyMap = new HashMap<>();
         try (BufferedReader reader = Files.newBufferedReader(inputFilePath)) {
             String line;
             while ((line = reader.readLine()) != null) {

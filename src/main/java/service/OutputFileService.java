@@ -29,14 +29,4 @@ public class OutputFileService {
             writeResultToFile(result, filename);
         }
     }
-
-    static void reloadFile(Path filename) {
-        if (Files.exists(filename)) {
-            try (BufferedWriter writer = Files.newBufferedWriter(filename, StandardOpenOption.TRUNCATE_EXISTING)) {
-
-            } catch (IOException e) {
-                System.out.println("Внимание! Проверьте путь к файлу: файл для записи результата не найден");
-            }
-        }
-    }
 }
